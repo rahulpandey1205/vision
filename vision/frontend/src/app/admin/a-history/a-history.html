@@ -1,0 +1,106 @@
+<div class="container">
+  <app-a-sidebar></app-a-sidebar>
+  
+  <div class="main-content">
+  <!-- Header Bar -->
+  <div class="header-bar">
+    <div class="welcome-section">
+      <h1>Visit History</h1>
+      <p>Complete record of all visitor activities</p>
+    </div>
+    
+    <div class="header-actions">
+      <div class="notification-bell">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge">{{notificationCount}}</span>
+      </div>
+      
+      <div class="user-profile">
+        <div class="user-avatar">AD</div>
+        <span>Admin</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="filter-card">
+      <label for="date-range">Date Range:</label>
+      <select id="date-range" [(ngModel)]="selectedDateRange" (change)="applyFilters()">
+        <option value="7">Last 7 Days</option>
+        <option value="30">Last 30 Days</option>
+        <option value="90">Last 90 Days</option>
+        <option value="all">All Time</option>
+      </select>
+    </div>
+    
+    <div class="filter-card">
+      <label for="visit-type">Visit Type:</label>
+      <select id="visit-type" [(ngModel)]="selectedVisitType" (change)="applyFilters()">
+        <option value="all">All Visits</option>
+        <option *ngFor="let type of visitTypes" [value]="type">{{type}}</option>
+      </select>
+    </div>
+    
+    <div class="filter-card">
+      <label for="search">Search:</label>
+      <input type="text" id="search" placeholder="Visitor name or host..." [(ngModel)]="searchQuery" (input)="applyFilters()">
+    </div>
+  </div>
+
+  <!-- History Table -->
+  <div class="history-table">
+    <div class="section-title">
+      <h4>Visitor Records</h4>
+      <div class="table-actions">.
+        <button class="export-button">
+        <i class="fas fa-file-export"></i>
+        Export
+        </button>
+      </div>
+    </div>
+    
+    <table>
+      <thead>
+        <tr>
+          <th (click)="sortData('visitorName')">Visitor Name <i class="fas fa-sort"></i></th>
+          <th (click)="sortData('checkInTime')">Check-in <i class="fas fa-sort"></i></th>
+          <th (click)="sortData('checkOutTime')">Check-out <i class="fas fa-sort"></i></th>
+          <th (click)="sortData('hostName')">Host <i class="fas fa-sort"></i></th>
+          <th>Purpose</th>
+          <th>Duration</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let visit of filteredVisits">
+          <td>{{visit.visitorName}}</td>
+          <td>{{visit.checkInTime | date:'medium'}}</td>
+          <td>{{visit.checkOutTime ? (visit.checkOutTime | date:'medium') : 'N/A'}}</td>
+          <td>{{visit.hostName}}</td>
+          <td>{{visit.purpose}}</td>
+          <td>{{calculateDuration(visit)}}</td>
+          <td>
+            <span class="status-badge" [ngClass]="{
+              'inside': visit.status === 'Inside',
+              'checked-out': visit.status === 'Checked Out',
+              'warning': visit.status === 'Overdue'
+            }">
+              {{visit.status}}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="pagination" *ngIf="filteredVisits.length > itemsPerPage">
+      <button (click)="previousPage()" [disabled]="currentPage === 1">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <span>Page {{currentPage}} of {{totalPages}}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>

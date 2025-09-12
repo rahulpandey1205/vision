@@ -1,0 +1,155 @@
+<!-- Header -->
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <a href="#" class="logo">
+            <fa-icon [icon]="faBuildingColumns"></fa-icon>
+            <span>Vision</span>
+            </a>
+            <button class="mobile-menu-btn" (click)="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+<ul class="nav-links" [class.active]="isMenuOpen">
+  <li><a (click)="scrollTo('home')">Home</a></li>
+  <li><a (click)="scrollTo('features')">Features</a></li>
+  <li><a (click)="scrollTo('how-it-works')">How It Works</a></li>
+  <li><a routerLink="/pricing">Pricing</a></li> 
+  <li><a routerLink="/contact">Contact</a></li> 
+  <li><a routerLink="/login" class="btn btn-accent" (click)="closeMenu()">Get Started</a></li>
+</ul>
+
+        </nav>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Modern Visitor Management Made Simple</h1>
+        <p>Streamline your visitor check-ins, enhance security, and create a professional first impression with our easy-to-use visitor management system.</p>
+        <div class="hero-buttons">
+            <a href="#" class="btn">Request Demo</a>
+            <a routerLink="/login" class="btn btn-accent">Sign Up Free</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+    <div class="container">
+        <div class="section-title">
+            <h2>Powerful Features</h2>
+            <p>Everything you need to manage visitors efficiently and securely</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card" *ngFor="let feature of features">
+                <div class="feature-icon">
+                    <i [class]="feature.icon"></i>
+                </div>
+                <h3>{{feature.title}}</h3>
+                <p>{{feature.description}}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works" id="how-it-works">
+    <div class="container">
+        <div class="section-title">
+            <h2>How It Works</h2>
+            <p>Simple three-step process to modernize your visitor management</p>
+        </div>
+        <div class="steps">
+            <div class="step"*ngFor="let step of steps; let i = index">
+                <div class="step-number">{{i + 1}}</div>
+                <h3>{{step.title}}</h3>
+                <p>{{step.description}}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials">
+    <div class="container">
+        <div class="section-title">
+            <h2>What Our Customers Say</h2>
+            <p>Trusted by organizations of all sizes across various industries</p>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+                <div class="testimonial-content">
+                    <p>{{testimonial.content}}</p>
+                </div>
+                <div class="testimonial-author">
+                    <img [src]="testimonial.avatar" [alt]="testimonial.name" class="author-avatar">
+                    <div class="author-info">
+                        <h4>{{testimonial.name}}</h4>
+                        <p>{{testimonial.position}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+    <div class="container">
+        <h2>Ready to Transform Your Visitor Management?</h2>
+        <p>Join thousands of organizations using Visory to create safer, more efficient visitor experiences.</p>
+        <a href="#" class="btn btn-accents">Start Free Trial</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Visory</h3>
+                <p>Modern visitor management solutions for businesses, schools, and facilities of all sizes.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Product</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Integrations</a></li>
+                    <li><a href="#">Updates</a></li>
+                    <li><a href="#">Mobile App</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Guides</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Webinars</a></li>
+                    <li><a href="#">API Docs</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Partners</a></li>
+                    <li><a href="#">Legal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; {{currentYear}} Visory. All rights reserved.</p>
+        </div>
+    </div>
+</footer>

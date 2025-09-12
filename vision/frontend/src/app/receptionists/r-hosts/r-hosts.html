@@ -1,0 +1,58 @@
+<div class="header">
+  <div class="greeting">
+    <h1>Host Management</h1>
+    <p>{{currentDate}}</p>
+  </div>
+  <div class="admin-profile">
+    <span class="notification-bell">
+      <fa-icon [icon]="faBell"></fa-icon>
+      <span class="bell-dot"></span>
+    </span>
+    <span class="admin-avatar">R</span>
+    <span class="admin-name">Ram</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">All Hosts</h2>
+    <button class="btn btn-primary" (click)="addHost()">
+      <fa-icon [icon]="faPlus"></fa-icon> Add Host
+    </button>
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Department</th>
+          <th>Contact</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (host of hosts; track host.id) {
+          <tr>
+            <td>{{host.name}}</td>
+            <td>{{host.department}}</td>
+            <td>
+              <div>{{host.phone}}</div>
+              <small>{{host.email}}</small>
+            </td>
+            <td>
+              <span class="badge {{host.status === 'available' ? 'badge-success' : 'badge-warning'}}">
+                {{host.status === 'available' ? 'Available' : 'Busy'}}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-outline btn-sm edit-host-btn" (click)="toggleHostStatus(host.id)">
+                <fa-icon [icon]="faPen"></fa-icon> Edit
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

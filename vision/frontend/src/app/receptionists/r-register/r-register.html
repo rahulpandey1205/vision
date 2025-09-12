@@ -1,0 +1,66 @@
+<div class="header">
+  <div class="greeting">
+    <h1>Register New Visitor</h1>
+    <p>{{currentDate}}</p>
+  </div>
+  <div class="admin-profile">
+    <span class="notification-bell">
+      <fa-icon [icon]="faBell"></fa-icon>
+      <span class="bell-dot"></span>
+    </span>
+    <span class="admin-avatar">R</span>
+    <span class="admin-name">Ram</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Visitor Information</h2>
+  </div>
+  <form #visitorForm="ngForm" (ngSubmit)="registerVisitor(visitorForm)">
+    <div class="form-group">
+      <label for="fullName" class="form-label">Full Name *</label>
+      <input type="text" id="fullName" name="fullName" class="form-control" required ngModel>
+    </div>
+    <div class="form-group">
+      <label for="phone" class="form-label">Phone Number *</label>
+      <input type="tel" id="phone" name="phone" class="form-control" required ngModel>
+    </div>
+    <div class="form-group">
+      <label for="email" class="form-label">Email Address</label>
+      <input type="email" id="email" name="email" class="form-control" ngModel>
+    </div>
+    <div class="form-group">
+      <label for="host" class="form-label">Host *</label>
+      <select id="host" name="host" class="form-control" required ngModel>
+        <option value="">Select a host</option>
+        @for (host of hosts; track host.id) {
+          <option [value]="host.name">{{host.name}} ({{host.department}})</option>
+        }
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="purpose" class="form-label">Purpose of Visit *</label>
+      <select id="purpose" name="purpose" class="form-control" required ngModel>
+        <option value="">Select purpose</option>
+        <option value="Meeting">Meeting</option>
+        <option value="Interview">Interview</option>
+        <option value="Delivery">Delivery</option>
+        <option value="Appointment">Appointment</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="notes" class="form-label">Additional Notes</label>
+      <textarea id="notes" name="notes" class="form-control" rows="3" ngModel></textarea>
+    </div>
+    <div class="form-group" style="display: flex; gap: 10px;">
+      <button type="submit" class="btn btn-primary">
+        <fa-icon [icon]="faCheck"></fa-icon> Register Visitor
+      </button>
+      <button type="reset" class="btn btn-outline">
+        <fa-icon [icon]="faRotateLeft"></fa-icon> Reset Form
+      </button>
+    </div>
+  </form>
+</div>

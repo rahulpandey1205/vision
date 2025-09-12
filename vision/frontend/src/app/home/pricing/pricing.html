@@ -1,0 +1,149 @@
+<!-- Header -->
+<header>
+  <div class="container">
+    <nav class="navbar">
+      <!-- Logo -->
+      <a routerLink="/" class="logo">
+        <fa-icon [icon]="faBuildingColumns"></fa-icon>
+        <span>Vision</span>
+      </a>
+
+      <!-- Center Nav Links -->
+      <div class="nav-center">
+        <ul class="nav-links" [class.active]="isMenuOpen">
+          <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/" fragment="features">Features</a></li>
+          <li><a routerLink="/" fragment="how-it-works">How It Works</a></li>
+          <li><a routerLink="/pricing" class="active">Pricing</a></li>
+          <li><a routerLink="/contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Right Side: Button + Mobile Menu -->
+      <div class="nav-right">
+        <a routerLink="/login" class="btn btn-accent" (click)="closeMenu()">Get Started</a>
+        <button class="mobile-menu-btn" (click)="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+<!-- Pricing Plans -->
+<section class="features">
+    <div class="container">
+        <div class="section-title">
+            <h2>Pricing Plans</h2>
+            <p>Flexible options for organizations of all sizes</p>
+        </div>
+        
+        <div class="pricing-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 40px;">
+            <div *ngFor="let plan of pricingPlans" 
+                 class="pricing-card" 
+                 [style]="plan.highlighted ? 'border: 2px solid var(--accent-color); transform: scale(1.05);' : ''"
+                 style="background: white; padding: 40px 30px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); flex: 1; min-width: 300px; max-width: 380px; position: relative;">
+                
+                <div *ngIf="plan.highlighted" style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent-color); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">
+                    MOST POPULAR
+                </div>
+                
+                <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--dark-color);">{{plan.name}}</h3>
+                <div style="margin-bottom: 15px;">
+                    <span style="font-size: 2.5rem; font-weight: bold; color: var(--primary-color);">{{plan.price}}</span>
+                    <span style="color: #666;">/{{plan.period}}</span>
+                </div>
+                <p style="color: #666; margin-bottom: 25px;">{{plan.description}}</p>
+                
+                <ul style="list-style: none; margin-bottom: 30px;">
+                    <li *ngFor="let feature of plan.features" style="margin-bottom: 10px; display: flex; align-items: center;">
+                        <fa-icon [icon]="faCheck" style="color: #4CAF50; margin-right: 10px;"></fa-icon>
+                        {{feature}}
+                    </li>
+                    <li *ngFor="let limitation of plan.limitations" style="margin-bottom: 10px; display: flex; align-items: center; color: #999;">
+                        <fa-icon [icon]="faXmark" style="color: #f44336; margin-right: 10px;"></fa-icon>
+                        {{limitation}}
+                    </li>
+                </ul>
+                
+                <a routerLink="/login" class="btn" [class.btn-accent]="plan.highlighted" style="display: block; text-align: center; width: 100%;">
+                    {{plan.price === 'Custom' ? 'Contact Sales' : 'Get Started'}}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="how-it-works">
+    <div class="container">
+        <div class="section-title">
+            <h2>Frequently Asked Questions</h2>
+            <p>Everything you need to know about our pricing</p>
+        </div>
+        
+        <div class="faq-list" style="max-width: 800px; margin: 0 auto;">
+            <div *ngFor="let faq of faqs" class="faq-item" style="background: white; margin-bottom: 20px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                <h3 style="margin-bottom: 10px; color: var(--primary-color);">{{faq.question}}</h3>
+                <p style="color: #666; line-height: 1.6;">{{faq.answer}}</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <p style="margin-bottom: 20px;">Have more questions? We're here to help.</p>
+            <a routerLink="/contact" class="btn">Contact Us</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Visory</h3>
+                <p>Modern visitor management solutions for businesses, schools, and facilities of all sizes.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Product</h3>
+                <ul class="footer-links">
+                    <li><a routerLink="/" fragment="features">Features</a></li>
+                    <li><a routerLink="/pricing">Pricing</a></li>
+                    <li><a href="#">Integrations</a></li>
+                    <li><a href="#">Updates</a></li>
+                    <li><a href="#">Mobile App</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Guides</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Webinars</a></li>
+                    <li><a href="#">API Docs</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a routerLink="/contact">Contact</a></li>
+                    <li><a href="#">Partners</a></li>
+                    <li><a href="#">Legal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; {{currentYear}} Visory. All rights reserved.</p>
+        </div>
+    </div>
+</footer>

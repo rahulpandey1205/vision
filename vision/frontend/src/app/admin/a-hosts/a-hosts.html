@@ -1,0 +1,111 @@
+<div class="container">
+  <app-a-sidebar></app-a-sidebar>
+
+  <main class="main-content">
+  <div class="header-bar">
+  <div class="welcome-section">
+    <h1>Host Management</h1>
+    <p>Monitor and manage all your hosts in one place</p>
+  </div>
+  
+  <div class="header-actions">
+        <div class="notification-bell">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge">{{ notifications.length }}</span>
+        </div>
+
+        <div class="user-profile">
+          <div class="user-avatar">
+  <ng-container *ngIf="user?.avatarUrl && user?.avatarUrl !== ''; else showInitials">
+    <img [src]="user.avatarUrl" alt="{{ user?.username }}'s avatar" />
+  </ng-container>
+
+  <!-- Fallback: Show initials -->
+  <ng-template #showInitials>
+    <div class="avatar-initials">
+      {{ getUserInitials(user?.username) }}
+    </div>
+   </ng-template>
+    </div>
+
+          <span>{{ user?.username }}</span>
+        </div>
+      </div>
+    </div>
+
+   
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-title">Total Hosts</div>
+    <div class="metric-value">24</div>
+    <div class="metric-change up">
+      <i class="fas fa-arrow-up"></i> 2 new this week
+    </div>
+  </div>
+  
+  <div class="metric-card">
+    <div class="metric-title">Available Hosts</div>
+    <div class="metric-value">12</div>
+    <div class="metric-change down">
+      <i class="fas fa-arrow-down"></i> 3 since morning
+    </div>
+  </div>
+  
+  <div class="metric-card">
+    <div class="metric-title">Busy Hosts</div>
+    <div class="metric-value">8</div>
+    <div class="metric-change up">
+      <i class="fas fa-arrow-up"></i> 2 from last hour
+    </div>
+  </div>
+  
+  <div class="metric-card">
+    <div class="metric-title">Avg Visitors/Host</div>
+    <div class="metric-value">1.8</div>
+    <div class="metric-change down">
+      <i class="fas fa-arrow-down"></i> 0.2 from yesterday
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Recent Check-ins</h2>
+    <a routerLink="/visitors" class="btn btn-outline view-all-btn">View All</a>
+  </div>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Host Name</th>
+        <th>Department</th>
+        <th>Status</th>
+        <th>Current Visitors</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let host of hosts">
+        <td>{{ host.name }}</td>
+        <td>{{ host.department }}</td>
+        <td>
+          <span class="status-badge" [class.inside]="host.status === 'available'" 
+                [class.checked-out]="host.status === 'busy'"
+                [class.warning]="host.status === 'away'">
+            {{ host.status | titlecase }}
+          </span>
+        </td>
+        <td>{{ host.visitors }}</td>
+        <td>
+          <button class="btn-small">
+            <i class="fas fa-envelope"></i>
+          </button>
+          <button class="btn-small">
+            <i class="fas fa-edit"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</main>

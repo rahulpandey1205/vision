@@ -1,0 +1,319 @@
+<div class="container">
+  <app-a-sidebar></app-a-sidebar>
+  
+  <main class="main-content">
+    <!-- Header Bar -->
+    <div class="header-bar">
+      <div class="welcome-section">
+        <h1>System Settings</h1>
+        <p>Configure and customize your dashboard</p>
+      </div>
+      
+      <div class="header-actions">
+        <div class="notification-bell">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge">3</span>
+        </div>
+        
+        <div class="user-profile">
+          <div class="user-avatar">{{user.avatar}}</div>
+          <span>{{user.name}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Tabs -->
+    <div class="settings-tabs">
+      <button [class.active]="activeTab === 'account'" (click)="changeTab('account')">
+        <i class="fas fa-user-cog"></i> Account
+      </button>
+      <button [class.active]="activeTab === 'preferences'" (click)="changeTab('preferences')">
+        <i class="fas fa-sliders-h"></i> Preferences
+      </button>
+      <button [class.active]="activeTab === 'security'" (click)="changeTab('security')">
+        <i class="fas fa-shield-alt"></i> Security
+      </button>
+      <button [class.active]="activeTab === 'users'" (click)="changeTab('users')">
+        <i class="fas fa-users"></i> User Management
+      </button>
+      <button [class.active]="activeTab === 'integrations'" (click)="changeTab('integrations')">
+        <i class="fas fa-plug"></i> Integrations
+      </button>
+      <button [class.active]="activeTab === 'logs'" (click)="changeTab('logs')">
+        <i class="fas fa-clipboard-list"></i> Activity Logs
+      </button>
+    </div>
+
+    <!-- Account Settings -->
+    <div class="settings-section" *ngIf="activeTab === 'account'">
+      <div class="section-card">
+        <h2><i class="fas fa-user"></i> Profile Information</h2>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" [(ngModel)]="user.name" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" [(ngModel)]="user.email" placeholder="Your email">
+        </div>
+        <div class="form-group">
+          <label>Profile Picture</label>
+          <div class="avatar-upload">
+            <div class="avatar-preview">{{user.avatar}}</div>
+            <button class="btn-upload"><i class="fas fa-camera"></i> Change Photo</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2><i class="fas fa-lock"></i> Password</h2>
+        <div class="form-group">
+          <label>Current Password</label>
+          <input type="password" placeholder="Current password">
+        </div>
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" placeholder="New password">
+        </div>
+        <div class="form-group">
+          <label>Confirm New Password</label>
+          <input type="password" placeholder="Confirm password">
+        </div>
+        <button class="btn-save">Update Password</button>
+      </div>
+
+      <div class="section-card">
+        <h2><i class="fas fa-mobile-alt"></i> Two-Factor Authentication</h2>
+        <div class="toggle-group">
+          <label>Enable 2FA</label>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="isTwoFactorEnabled">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <p class="help-text">Add an extra layer of security to your account</p>
+        <button class="btn-save" *ngIf="isTwoFactorEnabled">Configure 2FA</button>
+      </div>
+    </div>
+
+    <!-- Preferences Settings -->
+    <div class="settings-section" *ngIf="activeTab === 'preferences'">
+      <div class="section-card">
+        <h2><i class="fas fa-palette"></i> Appearance</h2>
+        <div class="toggle-group">
+          <label>Dark Mode</label>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="isDarkMode" (change)="toggleDarkMode()">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Language</label>
+          <select [(ngModel)]="systemPreferences.language">
+            <option>English</option>
+            <option>Spanish</option>
+            <option>French</option>
+            <option>German</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Timezone</label>
+          <select [(ngModel)]="systemPreferences.timezone">
+            <option>UTC+05:30</option>
+            <option>UTC-05:00</option>
+            <option>UTC+00:00</option>
+            <option>UTC+08:00</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2><i class="fas fa-bell"></i> Notifications</h2>
+        <div class="toggle-group">
+          <label>Email Notifications</label>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="notificationPreferences.email">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="toggle-group">
+          <label>SMS Notifications</label>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="notificationPreferences.sms">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="toggle-group">
+          <label>Push Notifications</label>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="notificationPreferences.push">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2><i class="fas fa-tools"></i> System Preferences</h2>
+        <div class="toggle-group">
+          <label>Maintenance Mode</label>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="isMaintenanceMode">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Date Format</label>
+          <select [(ngModel)]="systemPreferences.dateFormat">
+            <option>DD/MM/YYYY</option>
+            <option>MM/DD/YYYY</option>
+            <option>YYYY-MM-DD</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Time Format</label>
+          <select [(ngModel)]="systemPreferences.timeFormat">
+            <option>12-hour</option>
+            <option>24-hour</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security Settings -->
+    <div class="settings-section" *ngIf="activeTab === 'security'">
+      <div class="section-card">
+        <h2><i class="fas fa-shield-alt"></i> Security Settings</h2>
+        <div class="form-group">
+          <label>Session Timeout (minutes)</label>
+          <input type="number" [(ngModel)]="securitySettings.sessionTimeout" min="1" max="120">
+        </div>
+        <div class="form-group">
+          <label>Failed Login Attempts Before Lockout</label>
+          <input type="number" [(ngModel)]="securitySettings.loginAttempts" min="1" max="10">
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2><i class="fas fa-lock"></i> IP Whitelisting</h2>
+        <div class="form-group">
+          <label>Allowed IP Addresses</label>
+          <div class="ip-list">
+            <div class="ip-item" *ngFor="let ip of securitySettings.allowedIPs">
+              <span>{{ip}}</span>
+              <button class="btn-remove" (click)="removeAllowedIP(ip)"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="ip-add">
+            <input type="text" #newIP placeholder="Add new IP address">
+            <button class="btn-add" (click)="addAllowedIP(newIP.value); newIP.value=''">Add IP</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Management -->
+    <div class="settings-section" *ngIf="activeTab === 'users'">
+      <div class="section-card">
+        <div class="section-header">
+          <h2><i class="fas fa-users"></i> User Management</h2>
+          <button class="btn-primary"><i class="fas fa-user-plus"></i> Invite User</button>
+        </div>
+        
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Last Active</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                  <select [(ngModel)]="user.role">
+                    <option *ngFor="let role of roles">{{role}}</option>
+                  </select>
+                </td>
+                <td>
+                  <span class="status-badge" [class.active]="user.status === 'Active'" 
+                                       [class.suspended]="user.status === 'Suspended'">
+                    {{user.status}}
+                  </span>
+                </td>
+                <td>{{user.lastActive}}</td>
+                <td>
+                  <button class="btn-small"><i class="fas fa-edit"></i></button>
+                  <button class="btn-small"><i class="fas fa-trash"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integrations -->
+    <div class="settings-section" *ngIf="activeTab === 'integrations'">
+      <div class="section-card">
+        <h2><i class="fas fa-plug"></i> Third-Party Integrations</h2>
+        <div class="integrations-grid">
+          <div class="integration-card" *ngFor="let integration of integrations">
+            <div class="integration-info">
+              <div class="integration-icon">
+                <i class="fab fa-{{integration.name.toLowerCase()}}"></i>
+              </div>
+              <div class="integration-name">{{integration.name}}</div>
+              <div class="integration-status" [class.connected]="integration.connected">
+                {{integration.connected ? 'Connected' : 'Disconnected'}}
+              </div>
+            </div>
+            <button class="btn-integration" [class.connected]="integration.connected">
+              {{integration.connected ? 'Configure' : 'Connect'}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Logs -->
+    <div class="settings-section" *ngIf="activeTab === 'logs'">
+      <div class="section-card">
+        <h2><i class="fas fa-clipboard-list"></i> Activity Logs</h2>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>User</th>
+                <th>IP Address</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let log of activityLogs">
+                <td>{{log.action}}</td>
+                <td>{{log.user}}</td>
+                <td>{{log.ip}}</td>
+                <td>{{log.time | date:'medium'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Actions -->
+    <div class="settings-actions">
+      <button class="btn-save" (click)="saveSettings()">Save Changes</button>
+      <button class="btn-reset" (click)="resetToDefault()">Reset to Default</button>
+    </div>
+  </main>
+</div>

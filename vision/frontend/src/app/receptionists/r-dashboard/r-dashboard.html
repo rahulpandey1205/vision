@@ -1,0 +1,86 @@
+<div class="main-content">
+<div class="header">
+  <!-- Greeting & Profile Section -->
+<div class="header">
+  <div class="greeting">
+    <h1>Welcome, {{ userName }}!</h1>
+    <p>{{ currentDate }}</p>
+  </div>
+
+  <div class="admin-profile">
+    <span class="notification-bell">
+      <fa-icon [icon]="faBell"></fa-icon>
+      <span class="bell-dot"></span>
+    </span>
+    <span class="admin-avatar">{{ userInitials }}</span>
+    <span class="admin-name">{{ userName }}</span>
+  </div>
+</div>
+</div>
+
+<div class="grid-container">
+  <div class="card stat-card">
+    <h3>Visitors Today</h3>
+    <div class="value">{{visitorsToday}}</div>
+    <div class="change">+5% from yesterday</div>
+  </div>
+  <div class="card stat-card">
+    <h3>Active Visitors</h3>
+    <div class="value">{{activeVisitors}}</div>
+    <div class="change">+2 active now</div>
+  </div>
+  <div class="card stat-card">
+    <h3>Hosts On Duty</h3>
+    <div class="value">{{hostsOnDuty}}</div>
+    <div class="change">All present</div>
+  </div>
+  <div class="card stat-card">
+    <h3>Pre-Registrations</h3>
+    <div class="value">{{preRegistrationsToday}}</div>
+    <div class="change">+3 today</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Recent Check-ins</h2>
+    <a routerLink="/visitors" class="btn btn-outline view-all-btn">View All</a>
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Time</th>
+          <th>Host</th>
+          <th>Purpose</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (visitor of recentVisitors; track visitor.id) {
+          <tr>
+            <td>{{visitor.name}}</td>
+            <td>{{visitor.checkin}}</td>
+            <td>{{visitor.host}}</td>
+            <td>{{visitor.purpose}}</td>
+            <td>
+              <span class="status {{visitor.status === 'inside' ? 'inside' : 'checked-out'}}">
+                {{visitor.status === 'inside' ? 'Inside' : 'Checked Out'}}
+              </span>
+            </td>
+            <td>
+              @if (visitor.status === 'inside') {
+                <button class="btn btn-outline btn-sm checkout-btn" (click)="checkOutVisitor(visitor.id)">
+                  <fa-icon [icon]="faDoorOpen"></fa-icon> Check Out
+                </button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>

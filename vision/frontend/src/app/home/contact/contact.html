@@ -1,0 +1,186 @@
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <!-- Left: Logo -->
+            <a href="#" class="logo">
+                <fa-icon [icon]="faBuildingColumns"></fa-icon>
+                <span>Vision</span>
+            </a>
+
+            <!-- Center: Navigation Links -->
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <!-- Right: Get Started Button -->
+            <a href="#get-started" class="btn">Get Started</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Contact Section -->
+<section class="features">
+  <div class="container">
+    <div class="section-title">
+      <h2>Contact Us</h2>
+      <p>Reach out to our team for any inquiries or support</p>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; margin-top: 40px;">
+      <!-- Contact Form -->
+      <div style="flex: 1; min-width: 300px;">
+        <h3 style="margin-bottom: 20px; color: var(--dark-color);">Send us a Message</h3>
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <div style="margin-bottom: 20px;">
+            <input type="text" formControlName="name" placeholder="Your Name" />
+            <div
+              *ngIf="submitted && contactForm.controls['name'].errors"
+              style="color: #f44336; font-size: 0.8rem; margin-top: 5px;"
+            >
+              Name is required
+            </div>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <input type="email" formControlName="email" placeholder="Your Email" />
+            <div
+              *ngIf="submitted && contactForm.controls['email'].errors"
+              style="color: #f44336; font-size: 0.8rem; margin-top: 5px;"
+            >
+              Valid email is required
+            </div>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <input type="text" formControlName="company" placeholder="Company (Optional)" />
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <input type="text" formControlName="subject" placeholder="Subject" />
+            <div
+              *ngIf="submitted && contactForm.controls['subject'].errors"
+              style="color: #f44336; font-size: 0.8rem; margin-top: 5px;"
+            >
+              Subject is required
+            </div>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <textarea formControlName="message" placeholder="Your Message" rows="5"></textarea>
+            <div
+              *ngIf="submitted && contactForm.controls['message'].errors"
+              style="color: #f44336; font-size: 0.8rem; margin-top: 5px;"
+            >
+              Message is required
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-accent" style="width: 100%;">Send Message</button>
+        </form>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="contact-info" style="flex: 1; min-width: 300px;">
+        <h3>Contact Information</h3>
+
+        <div *ngFor="let info of contactInfo" class="info-box">
+          <fa-icon [icon]="info.icon"></fa-icon>
+          <div>
+            <h4>{{info.title}}</h4>
+            <p>{{info.content}}</p>
+          </div>
+        </div>
+
+        <div class="support-box">
+          <h4>Support</h4>
+          <p>
+            For technical support or assistance with your account, please visit our
+            <a href="#">Help Center</a> or email
+            <a href="mailto:support@vision.com">support&#64;vision.com</a>.
+          </p>
+
+          <h4>Sales Inquiries</h4>
+          <p>
+            Interested in our Enterprise plan or have questions about pricing? Contact our sales team
+            at <a href="mailto:sales@vision.com">sales&#64;vision.com</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Map Section -->
+<section class="how-it-works">
+  <div class="container">
+    <div class="section-title">
+      <h2>Our Location</h2>
+      <p>Visit our office or connect with us remotely</p>
+    </div>
+
+    <div class="map-container">
+      <div style="text-align: center; color: #666;">
+        <fa-icon [icon]="faMapMarkerAlt" style="font-size: 3rem; margin-bottom: 20px; display: block;"></fa-icon>
+        <h3>Interactive Map Would Appear Here</h3>
+        <p>123 Business Park, Sector 5, Bangalore, India - 560001</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>Visory</h3>
+        <p>
+          Modern visitor management solutions for businesses, schools, and facilities of all sizes.
+        </p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h3>Product</h3>
+        <ul class="footer-links">
+          <li><a routerLink="/" fragment="features">Features</a></li>
+          <li><a routerLink="/pricing">Pricing</a></li>
+          <li><a href="#">Integrations</a></li>
+          <li><a href="#">Updates</a></li>
+          <li><a href="#">Mobile App</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Resources</h3>
+        <ul class="footer-links">
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Guides</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Webinars</a></li>
+          <li><a href="#">API Docs</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Company</h3>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a routerLink="/contact">Contact</a></li>
+          <li><a href="#">Partners</a></li>
+          <li><a href="#">Legal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; {{currentYear}} Visory. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

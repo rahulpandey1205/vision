@@ -1,0 +1,7 @@
+.main-content-wrapper {
+  flex: 1;
+  margin-left: 280px; /* Same as sidebar width */
+  transition: margin-left 0.3s;
+}
+
+

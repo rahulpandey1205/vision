@@ -1,0 +1,21 @@
+<div>
+  <div class="logo">
+    <fa-icon [icon]="faBuildingColumns"></fa-icon> Vision
+  </div>
+  <ul class="nav-menu">
+    @for (item of navItems; track item.path) {
+      <li>
+        <a [routerLink]="item.path" routerLinkActive="active">
+          <fa-icon [icon]="item.icon"></fa-icon> {{item.label}}
+        </a>
+      </li>
+    }
+  </ul>
+</div>
+<ul class="nav-menu">
+  <li>
+    <a href="#" (click)="logout(); $event.preventDefault()">
+      <fa-icon [icon]="faRightFromBracket"></fa-icon> Logout
+    </a>
+  </li>
+</ul>

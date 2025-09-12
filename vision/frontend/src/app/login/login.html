@@ -1,0 +1,214 @@
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <a href="#" class="logo">
+            <fa-icon [icon]="faBuildingColumns"></fa-icon>
+            <span>Vision</span>
+            </a>
+            <button class="mobile-menu-btn" (click)="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" [class.active]="isMenuOpen">
+                <li><a href="#" (click)="closeMenu()">Home</a></li>
+                <li><a href="#features" (click)="closeMenu()">Features</a></li>
+                <li><a href="#how-it-works" (click)="closeMenu()">How It Works</a></li>
+                <li><a href="#pricing" (click)="closeMenu()">Pricing</a></li>
+                <li><a href="#contact" (click)="closeMenu()">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="auth-container min-vh-100 d-flex align-items-center" >
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="auth-box bg-white rounded-3 shadow-lg p-4 p-md-5">
+          <ul class="nav nav-tabs border-0 mb-4">
+            <li class="nav-item flex-grow-1 text-center">
+              <a class="nav-link fw-bold" [ngClass]="{'active': activeTab === 'login'}" (click)="setActiveTab('login')">Login</a>
+            </li>
+            <li class="nav-item flex-grow-1 text-center">
+              <a class="nav-link fw-bold" [ngClass]="{'active': activeTab === 'register'}" (click)="setActiveTab('register')">Register</a>
+            </li>
+          </ul>
+
+          <!-- Login Form -->
+          <form *ngIf="activeTab === 'login'" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+            <h2 class="text-center fw-bold mb-3">Welcome Back</h2>
+            <p class="text-center text-muted mb-4">Please enter your credentials to login</p>
+
+            <div class="mb-3">
+              <label for="loginEmail" class="form-label fw-medium">Email Address</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input type="email" class="form-control" id="loginEmail" formControlName="email" placeholder="Enter your email">
+              </div>
+              <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger small mt-1">
+                Please enter a valid email address
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="loginPassword" class="form-label fw-medium">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input [type]="showLoginPassword ? 'text' : 'password'" class="form-control" id="loginPassword" formControlName="password" placeholder="Enter your password">
+                <button type="button" class="btn btn-outline-secondary" (click)="togglePassword('loginPassword')">
+                  <i [class]="showLoginPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                </button>
+              </div>
+              <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger small mt-1">
+                Password must be at least 8 characters
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="rememberMe" formControlName="rememberMe">
+                <label class="form-check-label small" for="rememberMe">Remember me</label>
+              </div>
+              <a href="#" class="small text-primary">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2 mb-3" [disabled]="loginForm.invalid">
+              <span *ngIf="!isLoggingIn">Login</span>
+              <span *ngIf="isLoggingIn" class="btn-loading">
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Logging in...
+              </span>
+            </button>
+
+            <p class="text-center text-muted mb-0">
+              Don't have an account? <a routerLink="/login" class="text-info fw-medium" (click)="setActiveTab('register')">Register</a>
+            </p>
+          </form>
+
+          <!-- Registration Form -->
+          <form *ngIf="activeTab === 'register'" [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+            <h2 class="text-center fw-bold mb-3">Create Your Account</h2>
+            <p class="text-center text-muted mb-4">Join Visory to manage visitors efficiently</p>
+
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label for="firstName" class="form-label fw-medium">First Name</label>
+                <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="Enter your first name">
+                <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="text-danger small mt-1">
+                  Please enter your first name
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="lastName" class="form-label fw-medium">Last Name</label>
+                <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Enter your last name">
+                <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="text-danger small mt-1">
+                  Please enter your last name
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="registerEmail" class="form-label fw-medium">Email Address</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input type="email" class="form-control" id="registerEmail" formControlName="email" placeholder="Enter your email">
+              </div>
+              <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger small mt-1">
+                Please enter a valid email address
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="phone" class="form-label fw-medium">Phone Number</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                <input type="tel" class="form-control" id="phone" formControlName="phone" placeholder="Enter your phone number">
+              </div>
+              <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="text-danger small mt-1">
+                Please enter a valid phone number
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="registerPassword" class="form-label fw-medium">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input [type]="showRegisterPassword ? 'text' : 'password'" class="form-control" id="registerPassword" formControlName="password" placeholder="Create a password">
+                <button type="button" class="btn btn-outline-secondary" (click)="togglePassword('registerPassword')">
+                  <i [class]="showRegisterPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                </button>
+              </div>
+              <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger small mt-1">
+                Password must be at least 8 characters
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label fw-medium">Confirm Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm your password">
+                <button type="button" class="btn btn-outline-secondary" (click)="togglePassword('confirmPassword')">
+                  <i [class]="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                </button>
+              </div>
+              <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="text-danger small mt-1">
+                Passwords do not match
+              </div>
+            </div>
+
+            <!-- ✅ Updated Role Values -->
+            <div class="mb-4">
+              <label class="form-label fw-medium">Register As</label>
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <input type="radio" class="btn-check" name="role" id="adminRole" formControlName="role" value="ROLE_ADMIN">
+                  <label class="btn btn-outline-primary w-100 d-flex flex-column align-items-center py-3" for="adminRole">
+                    <i class="fas fa-user-shield mb-2 fs-4"></i>
+                    Admin
+                  </label>
+                </div>
+                <div class="col-md-4">
+                  <input type="radio" class="btn-check" name="role" id="Receptionist" formControlName="role" value="ROLE_RECEPTIONIST">
+                  <label class="btn btn-outline-primary w-100 d-flex flex-column align-items-center py-3" for="Receptionist">
+                    <i class="fas fa-shield-alt mb-2 fs-4"></i>
+                    Receptionist
+                  </label>
+                </div>
+              </div>
+              <div *ngIf="registerForm.get('role')?.invalid && registerForm.get('role')?.touched" class="text-danger small mt-1">
+                Please select a role
+              </div>
+            </div>
+
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="checkbox" id="agreeTerms" formControlName="agreeTerms">
+              <label class="form-check-label small" for="agreeTerms">
+                I agree to the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a>
+              </label>
+              <div *ngIf="registerForm.get('agreeTerms')?.invalid && registerForm.get('agreeTerms')?.touched" class="text-danger small mt-1">
+                You must agree to the terms
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2 mb-3" [disabled]="registerForm.invalid">
+              <span *ngIf="!isRegistering">Create Account</span>
+              <span *ngIf="isRegistering" class="btn-loading">
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Creating Account...
+              </span>
+            </button>
+
+            <p class="text-center text-muted mb-0">
+              Already have an account? <a routerLink="/login" class="text-info fw-medium" (click)="setActiveTab('login')">Log in</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+<div class="footer-bottom">
+            <p>&copy; {{currentYear}} Visory. All rights reserved.</p>
+        </div>
+</footer>

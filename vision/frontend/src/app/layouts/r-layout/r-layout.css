@@ -1,0 +1,32 @@
+.layout {
+    display: flex;
+  }
+  
+  .sidebar {
+    color: white;   
+    position: fixed;     /* If sidebar has scrollable content */
+    background: linear-gradient(135deg, #f5f7fa 0%, #6f8482 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100vh;
+    padding: 20px;
+    z-index: 1000; /* Stay above all */
+  }
+  
+  .main-content {
+    width: calc(100% - 200px); /* Prevent squeezing */
+    transition: margin-left 0.3s ease;
+    margin-left: 300px; /* 👈 Push the content so it doesn't sit under sidebar */
+    padding: 20px;
+  }
+  .app-wrapper {
+    display: flex;
+  }
+  
+  /* Sidebar collapsed state */
+  .sidebar.collapsed ~ .main-content {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+  }

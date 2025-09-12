@@ -1,0 +1,169 @@
+<div class="container">
+  <app-a-sidebar></app-a-sidebar>
+
+  <main class="main-content">
+    <!-- Header Bar -->
+    <div class="header-bar">
+      <div class="welcome-section">
+        <h1>Welcome back, {{ user?.username }}</h1>
+        <p id="current-date-time">{{ currentDateTime }}</p>
+      </div>
+
+      <div class="header-actions">
+        <div class="notification-bell">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge">{{ notifications.length }}</span>
+        </div>
+
+        <div class="user-profile">
+          <div class="user-avatar">
+  <ng-container *ngIf="user?.avatarUrl && user?.avatarUrl !== ''; else showInitials">
+    <img [src]="user.avatarUrl" alt="{{ user?.username }}'s avatar" />
+  </ng-container>
+
+  <!-- Fallback: Show initials -->
+  <ng-template #showInitials>
+    <div class="avatar-initials">
+      {{ getUserInitials(user?.username) }}
+    </div>
+   </ng-template>
+    </div>
+
+          <span>{{ user?.username }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-overlay">
+      <div class="spinner"></div>
+      <p>Loading dashboard data...</p>
+    </div>
+
+    <!-- Dashboard Metrics -->
+    <div class="metrics-grid" *ngIf="!isLoading">
+      <div class="metric-card">
+        <div class="metric-title">Visitors Today</div>
+        <div class="metric-value">{{ metrics.visitorsToday || 0 }}</div>
+        <div class="metric-change" [ngClass]="metrics.visitorsChange >= 0 ? 'up' : 'down'">
+          <i class="fas" [ngClass]="metrics.visitorsChange >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
+          {{ Math.abs(metrics.visitorsChange || 0) }}% from yesterday
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-title">Active Visitors</div>
+        <div class="metric-value">{{ metrics.activeVisitors || 0 }}</div>
+        <div class="metric-change" [ngClass]="metrics.activeChange >= 0 ? 'up' : 'down'">
+          <i class="fas" [ngClass]="metrics.activeChange >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
+          {{ Math.abs(metrics.activeChange || 0) }} from last hour
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-title">Hosts On Duty</div>
+        <div class="metric-value">{{ metrics.hostsOnDuty || 0 }}</div>
+        <div class="metric-change" [ngClass]="metrics.hostsChange >= 0 ? 'up' : 'down'">
+          <i class="fas" [ngClass]="metrics.hostsChange >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
+          {{ Math.abs(metrics.hostsChange || 0) }} available
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-title">Pre-Registrations</div>
+        <div class="metric-value">{{ metrics.preRegistrations || 0 }}</div>
+        <div class="metric-change" [ngClass]="metrics.preRegChange >= 0 ? 'up' : 'down'">
+          <i class="fas" [ngClass]="metrics.preRegChange >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
+          {{ Math.abs(metrics.preRegChange || 0) }} new today
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Check-ins Table -->
+    <div class="card" *ngIf="!isLoading">
+      <div class="card-header">
+        <h2 class="card-title">Recent Check-ins</h2>
+        <a routerLink="/visitors" class="btn btn-outline view-all-btn">View All</a>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Visitor Name</th>
+            <th>Check-in Time</th>
+            <th>Host</th>
+            <th>Purpose</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let visitor of recentVisitors">
+            <td>{{ visitor.name }}</td>
+            <td>{{ visitor.checkInTime | date: 'shortTime' }}</td>
+            <td>{{ visitor.host }}</td>
+            <td>{{ visitor.purpose }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="visitor.status === 'Inside' ? 'inside' : 'checked-out'">
+                {{ visitor.status }}
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="recentVisitors.length === 0">
+            <td colspan="5" class="no-data">No recent check-ins found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Analytics Section -->
+    <div class="analytics-section" *ngIf="!isLoading">
+      <div class="chart-card" *ngIf="purposeChartData">
+        <div class="section-title">
+          <h2>Visitor Purpose</h2>
+        </div>
+        <div class="chart-container">
+          <canvas baseChart
+            [data]="purposeChartData"
+            [type]="'pie'"
+            [options]="chartOptions">
+          </canvas>
+        </div>
+      </div>
+
+      <div class="chart-card" *ngIf="timeChartData">
+        <div class="section-title">
+          <h2>Visitors by Time</h2>
+        </div>
+        <div class="chart-container">
+          <canvas baseChart
+            [data]="timeChartData"
+            [type]="'bar'"
+            [options]="chartOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications Panel -->
+    <div class="notifications-panel" *ngIf="!isLoading">
+      <div class="section-title">
+        <h4>Notifications & Alerts</h4>
+      </div>
+
+      <div class="notification-item" *ngFor="let notification of notifications">
+        <div class="notification-icon">
+          <i [class]="notification.icon"></i>
+        </div>
+        <div class="notification-content">
+          <div class="notification-title">{{ notification.title }}</div>
+          <p>{{ notification.message }}</p>
+          <div class="notification-time">{{ notification.time | date: 'shortTime' }}</div>
+        </div>
+      </div>
+
+      <div *ngIf="notifications.length === 0" class="no-notifications">
+        No new notifications
+      </div>
+    </div>
+  </main>
+</div>

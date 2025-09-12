@@ -1,0 +1,64 @@
+<div class="header">
+  <div class="greeting">
+    <h1>Pre-Registrations</h1>
+    <p>{{currentDate}}</p>
+  </div>
+  <div class="admin-profile">
+    <span class="notification-bell">
+      <fa-icon [icon]="faBell"></fa-icon>
+      <span class="bell-dot"></span>
+    </span>
+    <span class="admin-avatar">R</span>
+    <span class="admin-name">Ram</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Upcoming Visits</h2>
+    <button class="btn btn-primary" (click)="addPreregistration()">
+      <fa-icon [icon]="faPlus"></fa-icon> Add Pre-Registration
+    </button>
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Contact</th>
+          <th>Visit Date</th>
+          <th>Time</th>
+          <th>Host</th>
+          <th>Purpose</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (prereg of preregistrations; track prereg.id) {
+          <tr>
+            <td>{{prereg.name}}</td>
+            <td>
+              <div>{{prereg.phone}}</div>
+              <small>{{prereg.email}}</small>
+            </td>
+            <td>{{formatDate(prereg.date)}}</td>
+            <td>{{prereg.time}}</td>
+            <td>{{prereg.host}}</td>
+            <td>{{prereg.purpose}}</td>
+            <td>
+              <span class="badge {{prereg.status === 'confirmed' ? 'badge-success' : 'badge-warning'}}">
+                {{prereg.status === 'confirmed' ? 'Confirmed' : 'Pending'}}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-outline btn-sm confirm-btn" (click)="togglePreregStatus(prereg.id)">
+                <fa-icon [icon]="faCheck"></fa-icon> Confirm
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
