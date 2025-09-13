@@ -1,10 +1,8 @@
-/* Main Content */
 .main-content {
   padding: 1.5rem;
   min-height: calc(100vh - 3rem);
 }
 
-/* Header Bar */
 .header-bar {
   display: flex;
   justify-content: space-between;
@@ -92,7 +90,6 @@
   text-transform: uppercase;
 }
 
-/* Add to your a-dashboard.css */
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -128,7 +125,6 @@
   color: #666;
 }
 
-/* Metrics Grid */
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -175,7 +171,6 @@
   color: var(--success-color);
 }
 
-/* Host Directory Table */
 .card {
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
@@ -379,7 +374,6 @@ th {
   color: var(--accent-color);
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
   .metrics-grid {
     grid-template-columns: 1fr 1fr;
